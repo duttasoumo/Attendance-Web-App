@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<style>
+	   /* Full-width input fields */
+	   input[type=text], input[type=password] {
+	      width: 100%;
+	      padding: 12px 20px;
+	      margin: 8px 0;
+	      display: inline-block;
+	      border: 1px solid #ccc;
+	      box-sizing: border-box;
+	   }
+
+	   /* Set a style for all buttons */
+	   button {
+	      background-color: #7E57C2;
+	      color: white;
+	      padding: 14px 20px;
+	      margin: 8px 0;
+	      border: none;
+	      cursor: pointer;
+	      width: 100%;
+	   }
+
+	   /* Extra styles for the cancel button */
+	   .cancelbtn {
+	      padding: 14px 20px;
+	      background-color: #EF5350;
+	   }
+
+	   /* Float cancel and signup buttons and add an equal width */
+	   .cancelbtn,.signupbtn {
+	      float: left;
+	      width: 50%;
+	   }
+
+	   /* Add padding to container elements */
+	   .container {
+	      padding: 16px;
+	   }
+
+	   /* Clear floats */
+	   .clearfix::after {
+	      content: "";
+	      clear: both;
+	      display: table;
+	   }
+
+	   /* Change styles for cancel button and signup button on extra small screens */
+	   @media screen and (max-width: 300px) {
+	      .cancelbtn, .signupbtn {
+	         width: 100%;
+	      }
+	   }
+        
+        #main{
+            width: 50%;
+            display: inline-block;
+            margin-left: 25%;
+            margin-right: 25%;
+            background-color: #BA68C8;
+        }
+        body {
+	   background-color: #F3E5F5;
+	}
+	</style>
+	<script type="text/javascript">
+	      function SignUpCheck(){
+	          var eno=document.getElementById("eno").value;
+	          
+	          var formData=new FormData();
+	          formData.append("eno",eno);
+	          var xmlhttp=new XMLHttpRequest();
+	          //window.alert("sometext");
+	          xmlhttp.onreadystatechange=function(){
+	              if (this.readyState == 4 && this.status == 200){
+	                 //window.alert(this.responseText);
+	                  if(this.responseText=="unsuccessful"){
+	                        window.alert("WRONG ENROLL NO");
+	                  }
+	                  var myArr=JSON.parse(this.responseText);
+	                  if(myArr['Password']!=null){
+	                    window.alert("ACCOUNT ALREADY EXISTS"); 
+	                  }
+	                  else{
+	                        document.getElementById("Fname").value=myArr['F_Name'];
+	                        document.getElementById("Fname").readOnly = true;
+	                        if(myArr['M_Name']==null)
+	                          document.getElementById("Mname").value=" ";
+	                        else
+	                          document.getElementById("Mname").value=myArr['M_Name'];
+	                        document.getElementById("Mname").readOnly = true;
+	                        document.getElementById("Lname").value=myArr['L_Name'];
+	                        document.getElementById("Lname").readOnly = true;
+	                  }
+	              }
+	          };
+	          xmlhttp.open("POST","SignUpcheck.php",true);
+	          xmlhttp.send(formData);
+	      }
+	      function updatetable(){
+	                    var eno=document.getElementById("eno").value;
+	                    var eid=document.getElementById("eid").value;
+	                    var psw=document.getElementById("psw").value;
+	          
+	                    var formData=new FormData();
+	                    formData.append("eno",eno);
+	                    formData.append("eid",eid);
+	                    formData.append("psw",psw);
+	                    var xmlhttp=new XMLHttpRequest();
+	                    xmlhttp.onreadystatechange=function(){
+	              if (this.readyState == 4 && this.status == 200){
+	                  window.alert("ACCOUNT UPDATED SUCCESSFULLY");
+	                  window.open("index.html","_self",false);
+	                }
+	              };
+	          xmlhttp.open("POST","updatetable.php",true);
+	          xmlhttp.send(formData);
+	    }
+	    function checkeno(){
+	        if(document.checkform.eno.value!="")
+	        {
+	          SignUpCheck();
+	        }
+	        else
+	         {
+	           window.alert("ENTER ENROLLNO");
+	           document.checkform.eno.focus();
+	         } 
+	    }
+	    function check()
+	    {
+	    if(document.checkform.psw.value=="")
+	    {
+	      alert("PLEASE ENTER YOUR PASSWORD");
+	    document.checkform.psw.focus();
+	    return false;
+	    } 
+	    if(document.checkform.cpsw.value=="")
+	    {
+	      alert("PLEASE CONFIRM YOUR PASSWORD");
+	    document.checkform.cpsw.focus();
+	    return false;
+	    }
+	    if(document.checkform.psw.value!=document.checkform.cpsw.value)
+	    {
+	      alert("THE PASSWORD FIELDS DO NOT MATCH");
+	    document.checkform.cpsw.focus();
+	    return false;
+	    }
+	    if(document.checkform.eid.value=="")
+	    {
+	      alert("please Enter your Email Address");
+	    document.checkform.eid.focus();
+	    return false;
+	    }
+	    e=document.checkform.eid.value;
+	      f1=e.indexOf('@');
+	      f2=e.indexOf('@',f1+1);
+	      e1=e.indexOf('.');
+	      e2=e.indexOf('.',e1+1);
+	      n=e.length;
+
+	      if(!(f1>0 && f2==-1 && e1>0 && e2==-1 && f1!=e1+1 && e1!=f1+1 && f1!=n-1 && e1!=n-1))
+	      {
+	        alert("PLEASE ENTER VALID EMAIL ID");
+	        document.checkform.eid.focus();
+	        return false;
+	      }
+	      updatetable();
+	    return true;
+	    }
+        function ClearAll(){
+            document.getElementById("eno").value="";
+            document.getElementById("Fname").value="";
+            document.getElementById("Mname").value="";
+            document.getElementById("Lname").value="";
+            document.getElementById("eid").value="";
+            document.getElementById("psw").value="";
+            document.getElementById("cpsw").value="";
+        }
+	</script>
+	<title></title>
+</head>
+<body onload="ClearAll();">
+    <center>
+        <font color="#9C27B0"><h1>Signup Form</h1></font>
+    </center>
+    <div id="main">
+	<form id="checkform" name="checkform" style="border:1px solid #ccc" >
+		<div class="container">
+			<label><b>Enroll No</b></label> <input id="eno" name="eno" placeholder="Enter Enroll No" required="" type="text">
+			<div class="clearfix">
+				<button class="signupbtn" onclick="checkeno();" type="button" style="width: 50%;
+            display: inline-block;
+            margin-left: 25%;
+            margin-right: 25%;">CHECK</button>
+			</div><label><b>Fname</b></label> <input id="Fname" name="Fname" readonly type="text"> <label><b>Mname</b></label> <input id="Mname" name="Mname" readonly type="text"> <label><b>Lname</b></label> <input id="Lname" name="Lname" readonly type="text"> <label><b>Email_id</b></label> <input id="eid" name="eid" placeholder="Enter your email id here" type="text"> <label><b>Password</b></label> <input id="psw" name="psw" placeholder="Enter your Password here" type="password"> <label><b>Confirm Password</b></label> <input id="cpsw" name="cpsw" placeholder="Enter your Password again" type="password">
+			<div class="clearfix">
+				<button class="cancelbtn" type="button" onclick="ClearAll();">CLEAR</button> <button class="signupbtn" onclick="return check();" type="button">SIGN UP</button>
+			</div>
+		</div>
+	</form>
+    </div>
+</body>
+</html>

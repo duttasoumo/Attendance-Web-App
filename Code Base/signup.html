@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>SIGNUP</title>
+	<link href="css/style2.css" rel="stylesheet" type="text/css">
+	<script>
+	</script>
+</head>
+<body>
+	<h2 align="center">Welcome to DUCS</h2><!--============This for TEACHERS==-->
+	<div id="box">
+		<div id="right">
+			<form>
+				<div class="imgcontainer"><img alt="Teacher" class="avatar" src="img/teacher.jpg"></div>
+				<div class="container">
+					<label><b>Enter ID</b></label> <input type="text"> <label><b>Username</b></label> <input id="username" placeholder="Enter Username" required="" type="text"> <label><b>Password</b></label> <input id="password" placeholder="Enter Password" required="" type="password"> <button onclick="TeacherLogin();" type="button"><span>SignUp</span></button>
+				</div>
+			</form>
+		</div><!--============END for TEACHER==-->
+		<!--============This for STUDENT==-->
+		<div id="left">
+			<form>
+				<div class="imgcontainer"><img alt="Student " class="avatar" src="img/student.jpg"></div>
+				<div class="container">
+					<label><b>Username</b></label> <input id="uname" placeholder="Enter Username" required="" type="text"> <label><b>Password</b></label> <input id="psw" placeholder="Enter Password" required="" type="password"> <button onclick="StudentLogin();" type="button"><span>SignUp</span></button>
+				</div><!--
+        <div class="container" style="background-color:#f1f1f1">
+            <span class="psw">Forgot <a href="#">password?</a></span>
+        </div>
+-->
+			</form>
+		</div><!--============END for STUDENT==-->
+	</div>
+</body>
+</html>

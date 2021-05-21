@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>STUDIES</title>
+	<style>
+	       table, th, td 
+	       {
+	           margin:10px 0;
+	           border:solid 1px #333;
+	           padding:2px 4px;
+	           font:15px Verdana;
+	       }
+	       th {
+	           font-weight:bold;
+	       }
+	</style>
+	<script>
+	   function CreateTableFromJSON() {
+	       var sel=document.getElementById('subjects');
+	       var str=sel.options[sel.selectedIndex].value;
+	       sel=document.getElementById('year');
+	       var str2=sel.options[sel.selectedIndex].value;
+	       var xmlhttp=new XMLHttpRequest();
+	       xmlhttp.onreadystatechange=function(){
+	           var myArr=JSON.parse(this.responseText);
+	           // EXTRACT VALUE FOR HTML HEADER. 
+	       // ('Book ID', 'Book Name', 'Category' and 'Price')
+	       var col = [];
+	       for (var i = 0; i < myArr.length; i++) {
+	           for (var key in myArr[i]) {
+	               if (col.indexOf(key) == -1) {
+	                   col.push(key);
+	               }
+	           }
+	       }
+
+	       // CREATE DYNAMIC TABLE.
+	       var table = document.createElement("table");
+
+	       // CREATE HTML TABLE HEADER ROW USING THE EXTRACTED HEADERS ABOVE.
+
+	       var tr = table.insertRow(-1);                   // TABLE ROW.
+
+	       for (var i = 0; i < col.length; i++) {
+	           var th = document.createElement("th");      // TABLE HEADER.
+	           th.innerHTML = col[i];
+	           tr.appendChild(th);
+	       }
+
+	       // ADD JSON DATA TO THE TABLE AS ROWS.
+	       for (var i = 0; i < myArr.length; i++) {
+
+	           tr = table.insertRow(-1);
+
+	           for (var j = 0; j < col.length; j++) {
+	               var tabCell = tr.insertCell(-1);
+	               tabCell.innerHTML = myArr[i][col[j]];
+	           }
+	       }
+
+	       // FINALLY ADD THE NEWLY CREATED TABLE WITH JSON DATA TO A CONTAINER.
+	       var divContainer = document.getElementById("showData");
+	       divContainer.innerHTML = "";
+	       divContainer.appendChild(table);
+	       };
+	       xmlhttp.open("GET","fetch.php?subject="+str+"&year="+str2,true);
+	       xmlhttp.send();
+	       
+	   }
+	</script>
+</head>
+<body>
+	SUBJECT: <select id="subjects" name="subjects">
+		<option value="MCA101">
+			MCA101
+		</option>
+		<option value="MCS101">
+			MCS101
+		</option>
+	</select> YEAR: <select id="year" name="year">
+		<option value="2017">
+			2017
+		</option>
+	</select><br>
+	<form>
+		<input onclick="CreateTableFromJSON()" type="button" value="Submit">
+	</form>
+	<p id="b1"></p><br>
+	<div id="showData"></div>
+</body>
+</html>

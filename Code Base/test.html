@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>TEST</title>
+	<script type="text/javascript">
+	       function generate(){
+	           var select = document.getElementById("selectNumber"); 
+	var options = ["1", "2", "3", "4", "5"]; 
+
+	for(var i = 0; i < options.length; i++) {
+	   var opt = options[i];
+	   var el = document.createElement("option");
+	   el.textContent = opt;
+	   el.value = opt;
+	   select.appendChild(el);
+	}
+	       }
+	</script>
+</head>
+<body onload="generate()">
+	<form id="myForm" name="myForm">
+		<select id="selectNumber">
+			<option>
+				Choose a number
+			</option>
+		</select>
+	</form>
+</body>
+</html>

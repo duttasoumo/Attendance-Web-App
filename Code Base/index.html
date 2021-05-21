@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>LOGIN</title>
+	<style>
+	   form {
+	      border: 3px solid #f1f1f1;
+	   }
+	    
+	   #box {
+	      100%;
+	   }
+	   #right {
+	      width:50%;
+	      float:left;
+	      font-size: 20px;
+	      color: #db3236 ;
+	   }
+	   #left {
+	      margin-left:50%;
+	      font-size: 20px;
+	      color: #4885ed;
+	   }    
+	      
+	   input[type=text], input[type=password] {
+	      width: 100%;
+	      padding: 12px 20px;
+	      margin: 8px 0;
+	      display: inline-block;
+	      border: 1px solid #ccc;
+	      box-sizing: border-box;
+	   }
+
+	   button {
+	    display: inline-block;
+	    border-radius: 4px;
+	    background-color: #3cba54;
+	    border: none;
+	    color: #FFFFFF;
+	    text-align: center;
+	    font-size: 20px;
+	    padding: 15px;
+	    width: 30%;
+	    transition: all 0.5s;
+	    cursor: pointer;
+	    margin: 5px;
+	   }
+
+	   button span {
+	    cursor: pointer;
+	    display: inline-block;
+	    position: relative;
+	    transition: 0.5s;
+	   }
+
+	   button span:after {
+	    content: '\00bb';
+	    position: absolute;
+	    opacity: 0;
+	    top: 0;
+	    right: -20px;
+	    transition: 0.5s;
+	   }
+	   button:hover {
+	      box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+	   }
+	   button:hover span {
+	    padding-right: 25px;
+	   }
+
+	   button:hover span:after {
+	    opacity: 1;
+	    right: 0;
+	   }
+
+
+	   .imgcontainer {
+	      text-align: center;
+	      margin: 24px 0 12px 0;
+	   }
+
+	   img.avatar {
+	      width: 40%;
+	      border-radius: 50%;
+	   }
+
+	   .container {
+	      padding: 16px;
+	   }
+
+	   span.psw {
+	      float: right;
+	      padding-top: 16px;
+	   }
+
+	   body {
+	   background-color: #F3E5F5;
+	}
+	</style>
+	<script type="text/javascript">
+	       function Initialize(){
+	          document.getElementById("username1").value="";
+	           document.getElementById("password1").value="";
+	           document.getElementById("username2").value="";
+	           document.getElementById("password2").value="";
+	       }
+	      function TeacherLogin(){
+	          var user=document.getElementById("username1").value;
+	          var pass=document.getElementById("password1").value;
+	          if(user=="" || pass==""){
+	              window.alert("ONE OR MORE FIELDS ARE EMPTY");
+	              return;
+	          }
+	          var formData=new FormData();
+	          formData.append("username",user);
+	          formData.append("password",pass);
+	          formData.append("choice","1");
+	          var xmlhttp=new XMLHttpRequest();
+	          xmlhttp.onreadystatechange=function(){
+	              if (this.readyState == 4 && this.status == 200){
+	                 //window.alert(this.responseText);
+	                  if(this.responseText=="success"){
+	                      window.open("afterloginteacher.html","_self",false);//to go to another page using same location 
+	                  }
+	                  else{
+	                      window.alert("WRONG ID OR PASSWORD. LOGIN FAILED.");
+	                      document.getElementById("username1").value="";
+	                      document.getElementById("password1").value="";
+	                  }
+	              }
+	          };
+	          xmlhttp.open("POST","final-login.php",true);
+	          xmlhttp.send(formData);
+	      }
+	      function StudentLogin(){
+	          var user=document.getElementById("username2").value;
+	          var pass=document.getElementById("password2").value;
+	          if(user=="" || pass==""){
+	              window.alert("ONE OR MORE FIELDS ARE EMPTY");
+	              return;
+	          }
+	          var formData=new FormData();
+	          formData.append("username",user);
+	          formData.append("password",pass);
+	          formData.append("choice","2");
+	          var xmlhttp=new XMLHttpRequest();
+	          xmlhttp.onreadystatechange=function(){
+	          if (this.readyState == 4 && this.status == 200){
+	                 //window.alert(this.responseText);
+	                  if(this.responseText=="success"){
+	                      window.open("afterloginstudent.html","_self",false);//to go to another page using same location 
+	                  }
+	               else{
+	                      window.alert("WRONG ID OR PASSWORD. LOGIN FAILED.");
+	                      document.getElementById("username2").value="";
+	                      document.getElementById("password2").value="";
+	                  }
+	              }
+	          };
+	          xmlhttp.open("POST","final-login.php",true);
+	          xmlhttp.send(formData);
+	      }    
+	</script>
+</head>
+<body onload="Initialize();">
+	<h1 align="center"><font color="#9C27B0">Welcome to DUCS</font></h1><!--============This for TEACHERS==-->
+	<div id="box">
+		<div id="right">
+			<form>
+				<div class="imgcontainer"><img alt="Teacher" class="avatar" src="img/teacher.jpg"></div>
+				<div class="container">
+					<label><b>Username</b></label> <input id="username1" placeholder="Enter Username" required="" type="text" > <label><b>Password</b></label> <input id="password1" placeholder="Enter Password" required="" type="password"> <button onclick="TeacherLogin();" type="button"><span>Login</span></button>
+				</div>
+			</form>
+		</div><!--============END for TEACHER==-->
+		<!--============This for STUDENT==-->
+		<div id="left">
+			<form>
+				<div class="imgcontainer"><img alt="Student " class="avatar" src="img/student.jpg"></div>
+				<div class="container">
+					<label><b>Username</b></label> <input id="username2" placeholder="Enter Username" required="" type="text"> <label><b>Password</b></label> <input id="password2" placeholder="Enter Password" required="" type="password"> <button onclick="StudentLogin();" type="button"><span>Login</span></button> <button class="button" type="button" onclick="window.open('signupstudent.html','_self',false);"><span>Sign Up</span></button> <button class="button" type="button" onclick="window.open('resetpassword.html','_self',true);"><span>Change Password</span></button>
+				</div>
+			</form>
+		</div><!--============END for STUDENT==-->
+	</div>
+</body>
+</html>

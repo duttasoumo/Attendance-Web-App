@@ -1,0 +1,37 @@
+ul {
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+}
+li {
+	float: left;
+}
+li a {
+	display: block;
+	color: white;
+	text-align: center;
+	padding: 14px 16px;
+	text-decoration: none;
+}
+.inactive {
+	background-color: #4885ed;
+	padding: 20px;
+	width: 90%;
+}
+li a:hover:not(.active) {}
+.active {
+	background-color: #4885ed;
+	width: 90%;
+	box-shadow: 3px 7px 12px 0 rgba(0, 0, 0, 0.24), 6px 10px 16px 0 rgba(0, 0, 0, 0.19);
+}
+.title {
+	font-size: 40px;
+	color: #FF8F00;
+	font-family: Sweet Sensations Personal Use;
+}
+.lout {
+	background-color: #db3236;
+    box-shadow: 3px 7px 12px 0 rgba(0, 0, 0, 0.24), 6px 10px 16px 0 rgba(0, 0, 0, 0.19);
+    margin-right: 5px
+}
